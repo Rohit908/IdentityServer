@@ -1,0 +1,77 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\auth\\AngularASPNETCore2WebApiAuth\\src\\AngularASPNETCore2WebApiAuth.csproj": {}
+  },
+  "projects": {
+    "D:\\auth\\AngularASPNETCore2WebApiAuth\\src\\AngularASPNETCore2WebApiAuth.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\auth\\AngularASPNETCore2WebApiAuth\\src\\AngularASPNETCore2WebApiAuth.csproj",
+        "projectName": "AngularASPNETCore2WebApiAuth",
+        "projectPath": "D:\\auth\\AngularASPNETCore2WebApiAuth\\src\\AngularASPNETCore2WebApiAuth.csproj",
+        "packagesPath": "C:\\Users\\Bhanushali\\.nuget\\packages\\",
+        "outputPath": "D:\\auth\\AngularASPNETCore2WebApiAuth\\src\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Bhanushali\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.0": {
+            "targetAlias": "netcoreapp2.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.0": {
+          "targetAlias": "netcoreapp2.0",
+          "dependencies": {
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[3.2.0, )"
+            },
+            "Microsoft.AspNetCore.All": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.0, )",
+              "autoReferenced": true
+            },
+            "fluentvalidation.aspnetcore": {
+              "target": "Package",
+              "version": "[7.3.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
