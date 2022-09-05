@@ -11,15 +11,7 @@ namespace IdentityServer4Demo
         public static IEnumerable<IdentityResource> GetIdentityResources() => new List<IdentityResource>
         {
             new IdentityResources.OpenId(),
-            new IdentityResources.Profile(),
-            new IdentityResource
-            {
-                Name = "custom.scope",
-                UserClaims =
-                {
-                    "permission"
-                }
-            }
+            new IdentityResources.Profile()
         };
 
         public static IEnumerable<ApiResource> GetApis() => 
@@ -28,25 +20,43 @@ namespace IdentityServer4Demo
                 new ApiResource("ApiOne")
             };
 
-        public static IEnumerable<ApiScope> GetApiScopes() => 
-            new List<ApiScope> 
-            { 
-                new ApiScope("ApiOne") 
+        public static IEnumerable<ApiScope> GetApiScopes() =>
+            new List<ApiScope>
+            {
+                new ApiScope("ApiOne")
             };
 
         public static IEnumerable<Client> GetClients() => 
             new List<Client> 
             { 
                 new Client() { 
-                    ClientId = "client_id",
-                    ClientSecrets = {new Secret("client_secret".ToSha256())},
-                    AllowedGrantTypes = GrantTypes.Code,
+                    ClientId = "client1",
+                    ClientSecrets = {new Secret("secret1".ToSha256())},
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
                     AllowedScopes = {
-                            "ApiOne",
-                            IdentityServerConstants.StandardScopes.OpenId,
-                            IdentityServerConstants.StandardScopes.Profile,
-                            "custom.scope"},
-                     RequireConsent = false,
+                        "ApiOne"
+                    }
+                },
+                new Client
+                {
+                    ClientId = "mvc",
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+
+                    // where to redirect to after login
+                    RedirectUris = { "https://localhost:44367/signin-oidc" },
+
+                    // where to redirect to after logout
+                    PostLogoutRedirectUris = { "https://localhost:44367/signout-callback-oidc" },
+
+                    AllowedScopes = new List<string>
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "ApiOne",
+                    },
+                    RequireConsent = false,
                     AlwaysIncludeUserClaimsInIdToken = true
                 }
             };

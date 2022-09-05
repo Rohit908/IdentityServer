@@ -22,44 +22,11 @@ namespace ApiOne.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-
-        [HttpGet]
-        public async Task<IActionResult> Index()
-        {
-            //retrive access token
-            var serverClient = _httpClientFactory.CreateClient();
-
-            var discoveryDocument = await serverClient.GetDiscoveryDocumentAsync("https://localhost:44373/");
-
-            var tokenResponse = await serverClient.RequestClientCredentialsTokenAsync(
-                new ClientCredentialsTokenRequest
-                {
-                    Address = discoveryDocument.TokenEndpoint,
-                    ClientId = "client_id",
-                    ClientSecret = "client_secret",
-                    Scope = "ApiOne"
-                });
-
-            //retrive secret data
-            var apiClient = _httpClientFactory.CreateClient();
-            apiClient.SetBearerToken(tokenResponse.AccessToken);
-
-            var response = await apiClient.GetAsync("https://localhost:44371/api/Products/Read");
-
-            var content = response.Content.ReadAsStringAsync();
-
-            return Ok(new { access_token = tokenResponse.AccessToken, message = content });
-
-        }
-
-
-        //[Authorize(Permissions.Products.View)]
-        [Authorize]
+        [Authorize(Permissions.Products.View)]
         [HttpGet("Read")]
         public IActionResult Read()
         {
-            return new JsonResult(from c in User.Claims select new { c.Type, c.Value });
-            //return Ok("Reading Successful");
+            return Ok("Reading Successful");
         }
 
         [Authorize(Permissions.Products.Create)]

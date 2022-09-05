@@ -17,35 +17,35 @@ namespace ApiOne
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddAuthentication("Bearer")
-            //   .AddJwtBearer("Bearer", config =>
-            //   {
-            //       config.Authority = "https://localhost:44373/";
-            //       config.Audience = "ApiOne";
-            //       config.TokenValidationParameters = new TokenValidationParameters
-            //       {
-            //           ValidateAudience = false
-            //       };
-            //   });
+            services.AddAuthentication("Bearer")
+               .AddJwtBearer("Bearer", config =>
+               {
+                   config.Authority = "https://localhost:44373/";
+                   config.Audience = "ApiOne";
+                   config.TokenValidationParameters = new TokenValidationParameters
+                   {
+                       ValidateAudience = false
+                   };
+               });
 
 
-            services.AddAuthentication(config =>
-            {
-                config.DefaultScheme = "Cookie";
-                config.DefaultChallengeScheme = "oidc";
-            })
-                .AddCookie("Cookie")
-                .AddOpenIdConnect("oidc", config =>
-                {
-                    config.Authority = "https://localhost:44373/";
-                    config.ClientId = "client_id";
-                    config.ClientSecret = "client_secret";
-                    config.SaveTokens = true;
+            //services.AddAuthentication(config =>
+            //{
+            //    config.DefaultScheme = "Cookie";
+            //    config.DefaultChallengeScheme = "oidc";
+            //})
+            //    .AddCookie("Cookie")
+            //    .AddOpenIdConnect("oidc", config =>
+            //    {
+            //        config.Authority = "https://localhost:44373/";
+            //        config.ClientId = "client_id";
+            //        config.ClientSecret = "client_secret";
+            //        config.SaveTokens = true;
 
-                    config.ResponseType = "code";
+            //        config.ResponseType = "code";
 
-                    config.Scope.Add("custom.scope");
-                });
+            //        config.Scope.Add("Permission");
+            //    });
 
             services.AddHttpClient();
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using PermissonBasedAuth.ViewModels;
 using System.Threading.Tasks;
 
 namespace PermissonBasedAuth.Controllers
@@ -18,14 +17,14 @@ namespace PermissonBasedAuth.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginVM model)
         {
 
             var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
 
             if (result.Succeeded)
             {
-                return Redirect(model.ReturnUrl);
+                return Ok("Success");
             }
 
             return BadRequest("SignIn Failed");
@@ -36,5 +35,12 @@ namespace PermissonBasedAuth.Controllers
         {
             return Unauthorized("You are not Authorized");
         }
+    }
+
+    public class LoginVM
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string ReturnUrl { get; set; }
     }
 }

@@ -1,3 +1,4 @@
+using IdentityServer4.Services;
 using IdentityServer4Demo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -30,27 +31,25 @@ namespace PermissonBasedAuth
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders(); ;
-
-            services.ConfigureApplicationCookie(config =>
-            {
-                config.Cookie.Name = "IdentityServer.Cookie";
-                config.LoginPath = "/api/Auth/Unauthorized";
-                config.AccessDeniedPath = "/api/Auth/Unauthorized";
-            });
+                .AddDefaultTokenProviders();
 
             services.AddIdentityServer()
+                .AddProfileService<ProfileService>()
                 .AddAspNetIdentity<IdentityUser>()
-                .AddInMemoryApiResources(IdentityServerConfiguration.GetApis())
                 .AddInMemoryIdentityResources(IdentityServerConfiguration.GetIdentityResources())
+                .AddInMemoryApiResources(IdentityServerConfiguration.GetApis())
                 .AddInMemoryApiScopes(IdentityServerConfiguration.GetApiScopes())
                 .AddInMemoryClients(IdentityServerConfiguration.GetClients())
                 .AddDeveloperSigningCredential();
 
+            services.AddScoped<IProfileService, ProfileService>();
+
             services.AddSingleton<IAuthorizationPolicyProvider,CustomAuthorizationPolicyProvider>();
             services.AddScoped<IAuthorizationHandler, PermissionHandler>();
 
-            services.AddControllers();
+            services.AddControllersWithViews();
+
+            services.AddHttpClient();
 
             services.AddSwaggerGen(s =>
             {
@@ -77,6 +76,7 @@ namespace PermissonBasedAuth
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
             app.UseRouting();
 
             app.UseIdentityServer();
@@ -86,7 +86,7 @@ namespace PermissonBasedAuth
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }
